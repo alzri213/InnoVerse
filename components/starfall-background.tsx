@@ -15,17 +15,26 @@ interface Star {
 export default function StarfallBackground() {
   const [stars, setStars] = useState<Star[]>([])
   const [scrollY, setScrollY] = useState(0)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!mounted) return
+
     const handleScroll = () => {
       setScrollY(window.scrollY)
     }
 
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  }, [mounted])
 
   useEffect(() => {
+    if (!mounted) return
+
     const createStars = () => {
       const newStars: Star[] = []
       for (let i = 0; i < 50; i++) {
@@ -72,10 +81,14 @@ export default function StarfallBackground() {
 
     const interval = setInterval(animateStars, 50)
     return () => clearInterval(interval)
-  }, [])
+  }, [mounted])
 
   // Calculate opacity based on scroll position (fade out after 800px)
   const opacity = Math.max(0, 1 - scrollY / 800)
+
+  if (!mounted) {
+    return null
+  }
 
   return (
     <div
