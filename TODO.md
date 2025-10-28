@@ -1,7 +1,9 @@
-# TODO: Make Loading Screen Responsive for Mobile
+# TODO: Optimize Loading Screen Performance for Mobile
 
-- [x] Adjust logo text size to be smaller on mobile (text-6xl md:text-8xl lg:text-9xl)
-- [x] Resize loading animation circle to scale down on mobile (w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40)
-- [x] Make progress bar width responsive (w-full max-w-96)
-- [x] Scale orbiting elements proportionally (adjust sizes for mobile)
-- [x] Adjust text sizes for better mobile readability (progress percentage and loading text)
+- [x] Reduce falling stars count on mobile (3-5 instead of 8-13)
+- [x] Disable click particles on mobile to reduce lag
+- [x] Simplify orbiting elements (remove some for mobile)
+- [x] Increase animation intervals (slower updates for better performance)
+- [x] Add mobile detection for conditional animations
+- [x] Simplify glow effects and reduce blur usage on mobile
+- [ ] Test performance improvements on mobile

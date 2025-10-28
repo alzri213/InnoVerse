@@ -35,22 +35,34 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [fallingStars, setFallingStars] = useState<FallingStar[]>([])
   const [particleId, setParticleId] = useState(0)
   const [lastClickTime, setLastClickTime] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
 
-  // Generate falling stars
+  // Detect mobile and setup performance optimizations
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // Generate falling stars with mobile optimization
   useEffect(() => {
     const createFallingStars = () => {
       const stars: FallingStar[] = []
-      const numStars = Math.floor(Math.random() * 6) + 8 // 8-13 stars
+      const numStars = isMobile ? Math.floor(Math.random() * 3) + 3 : Math.floor(Math.random() * 6) + 8 // 3-5 stars on mobile, 8-13 on desktop
 
       for (let i = 0; i < numStars; i++) {
-        const speed = Math.random() * 4 + 0.3 // Speed between 0.3-4.3 (even more variation)
+        const speed = Math.random() * 2 + 0.2 // Slower speed for better performance
         stars.push({
           id: i,
-          x: Math.random() * window.innerWidth * 0.5, // Start from left 50%
-          y: Math.random() * window.innerHeight * 0.5, // Start from top 50%
-          size: Math.random() * 8 + 6, // Even larger size: 6-14px
+          x: Math.random() * window.innerWidth * 0.5,
+          y: Math.random() * window.innerHeight * 0.5,
+          size: Math.random() * 6 + 4, // Smaller size: 4-10px
           speed: speed,
-          opacity: Math.random() * 0.3 + 0.7, // Even higher opacity: 0.7-1.0
+          opacity: Math.random() * 0.3 + 0.6, // Slightly lower opacity
           trail: []
         })
       }
@@ -59,15 +71,14 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
     createFallingStars()
 
-    // Animate falling stars
+    // Animate falling stars with slower interval for mobile
     const animateStars = () => {
       setFallingStars(prev => prev.map(star => {
-        const newX = star.x + star.speed * 3 // Move diagonally right (even faster)
-        const newY = star.y + star.speed * 2.5 // Move diagonally down (even faster)
+        const newX = star.x + star.speed * 2 // Slower movement
+        const newY = star.y + star.speed * 1.5
 
-        // Reset star when it goes off screen
         let resetStar = false
-        if (newX > window.innerWidth + 100 || newY > window.innerHeight + 100) {
+        if (newX > window.innerWidth + 50 || newY > window.innerHeight + 50) {
           resetStar = true
         }
 
@@ -80,9 +91,10 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           }
         }
 
-        // Update trail
+        // Shorter trails on mobile for performance
+        const maxTrailLength = isMobile ? 10 : 15
         const newTrail = [...star.trail, { x: star.x, y: star.y }]
-        if (newTrail.length > 20) newTrail.shift() // Keep only last 20 positions for even longer trails
+        if (newTrail.length > maxTrailLength) newTrail.shift()
 
         return {
           ...star,
@@ -93,12 +105,14 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       }))
     }
 
-    const starInterval = setInterval(animateStars, 30) // Even faster animation
+    const starInterval = setInterval(animateStars, isMobile ? 50 : 40) // Slower interval on mobile
     return () => clearInterval(starInterval)
-  }, [])
+  }, [isMobile])
 
-  // Handle click particles
+  // Handle click particles - disabled on mobile for performance
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isMobile) return // Skip click particles on mobile to reduce lag
+
     const now = Date.now()
     const cooldown = 500 // Longer cooldown to prevent spamming and reduce lag
 
@@ -219,22 +233,25 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
       {/* Central loading content */}
       <div className="text-center relative z-10">
-        {/* Logo/Brand with enhanced glow and 3D animation */}
-        <div className="mb-8 md:mb-12 relative" style={{ perspective: '1000px' }}>
-          <div className="text-6xl md:text-8xl lg:text-9xl font-bold mb-4 relative animate-3d-rotate">
+        {/* Logo/Brand with simplified glow for mobile performance */}
+        <div className="mb-8 md:mb-12 relative" style={{ perspective: isMobile ? 'none' : '1000px' }}>
+          <div className={`text-6xl md:text-8xl lg:text-9xl font-bold mb-4 relative ${isMobile ? '' : 'animate-3d-rotate'}`}>
             <span className="text-blue-300 drop-shadow-2xl animate-pulse-glow-blue">Inno</span>
             <span className="text-red-300 drop-shadow-2xl animate-pulse-glow-red">Verse</span>
           </div>
-          {/* Logo glow effect */}
-          <div className="absolute inset-0 text-6xl md:text-8xl lg:text-9xl font-bold blur-xl opacity-50 animate-3d-rotate-delayed">
-            <span className="text-blue-400">Inno</span>
-            <span className="text-red-400">Verse</span>
-          </div>
-          {/* Additional glow layers */}
-          <div className="absolute inset-0 text-6xl md:text-8xl lg:text-9xl font-bold blur-2xl opacity-30 animate-3d-rotate-reverse">
-            <span className="text-blue-500">Inno</span>
-            <span className="text-red-500">Verse</span>
-          </div>
+          {/* Simplified glow effect on mobile */}
+          {!isMobile && (
+            <>
+              <div className="absolute inset-0 text-6xl md:text-8xl lg:text-9xl font-bold blur-xl opacity-50 animate-3d-rotate-delayed">
+                <span className="text-blue-400">Inno</span>
+                <span className="text-red-400">Verse</span>
+              </div>
+              <div className="absolute inset-0 text-6xl md:text-8xl lg:text-9xl font-bold blur-2xl opacity-30 animate-3d-rotate-reverse">
+                <span className="text-blue-500">Inno</span>
+                <span className="text-red-500">Verse</span>
+              </div>
+            </>
+          )}
         </div>
 
         {/* Enhanced loading animation */}
@@ -253,15 +270,19 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             </div>
           </div>
 
-          {/* Enhanced orbiting elements */}
+          {/* Simplified orbiting elements for mobile performance */}
           <div className="absolute inset-0">
             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-4 sm:-translate-y-5 md:-translate-y-6 w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 bg-cyan-400 rounded-full animate-orbit-loading shadow-lg shadow-cyan-400/60"></div>
             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-4 sm:translate-y-5 md:translate-y-6 w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-3 md:h-3 bg-pink-400 rounded-full animate-orbit-loading-reverse shadow-lg shadow-pink-400/60"></div>
             <div className="absolute left-0 top-1/2 transform -translate-x-4 sm:-translate-x-5 md:-translate-x-6 -translate-y-1/2 w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-3.5 md:h-3.5 bg-purple-400 rounded-full animate-orbit-loading-slow shadow-lg shadow-purple-400/60"></div>
             <div className="absolute right-0 top-1/2 transform translate-x-4 sm:translate-x-5 md:translate-x-6 -translate-y-1/2 w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-2.5 md:h-2.5 bg-yellow-400 rounded-full animate-orbit-loading-reverse-slow shadow-lg shadow-yellow-400/60"></div>
-            {/* Additional orbiting elements */}
-            <div className="absolute top-1/4 left-1/4 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-400 rounded-full animate-orbit-loading-fast shadow-lg shadow-blue-400/60"></div>
-            <div className="absolute bottom-1/4 right-1/4 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-400 rounded-full animate-orbit-loading-reverse-fast shadow-lg shadow-green-400/60"></div>
+            {/* Additional orbiting elements - hidden on mobile */}
+            {!isMobile && (
+              <>
+                <div className="absolute top-1/4 left-1/4 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-400 rounded-full animate-orbit-loading-fast shadow-lg shadow-blue-400/60"></div>
+                <div className="absolute bottom-1/4 right-1/4 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-400 rounded-full animate-orbit-loading-reverse-fast shadow-lg shadow-green-400/60"></div>
+              </>
+            )}
           </div>
         </div>
 
