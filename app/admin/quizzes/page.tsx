@@ -13,6 +13,7 @@ interface Quiz {
   description: string
   total_questions: number
   passing_score: number
+  category: string
 }
 
 export default function AdminQuizzesPage() {
@@ -23,14 +24,16 @@ export default function AdminQuizzesPage() {
   const [newQuiz, setNewQuiz] = useState({
     title: "",
     description: "",
-    total_questions: 10,
+    total_questions: 20,
     passing_score: 70,
+    category: "RPL",
   })
   const [editQuiz, setEditQuiz] = useState({
     title: "",
     description: "",
-    total_questions: 10,
+    total_questions: 20,
     passing_score: 70,
+    category: "RPL",
   })
   const router = useRouter()
   const supabase = createClient()
@@ -86,8 +89,9 @@ export default function AdminQuizzesPage() {
       setNewQuiz({
         title: "",
         description: "",
-        total_questions: 10,
+        total_questions: 20,
         passing_score: 70,
+        category: "RPL",
       })
       setIsAdding(false)
     }
@@ -100,6 +104,7 @@ export default function AdminQuizzesPage() {
       description: quiz.description,
       total_questions: quiz.total_questions,
       passing_score: quiz.passing_score,
+      category: quiz.category,
     })
     setIsAdding(true)
   }
@@ -119,8 +124,9 @@ export default function AdminQuizzesPage() {
       setEditQuiz({
         title: "",
         description: "",
-        total_questions: 10,
+        total_questions: 20,
         passing_score: 70,
+        category: "RPL",
       })
       setIsAdding(false)
     }
@@ -131,8 +137,9 @@ export default function AdminQuizzesPage() {
     setEditQuiz({
       title: "",
       description: "",
-      total_questions: 10,
+      total_questions: 20,
       passing_score: 70,
+      category: "RPL",
     })
     setIsAdding(false)
   }
@@ -234,6 +241,22 @@ export default function AdminQuizzesPage() {
                   />
                 </div>
               </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Kategori</label>
+                <select
+                  value={editingId ? editQuiz.category : newQuiz.category}
+                  onChange={(e) => editingId
+                    ? setEditQuiz({ ...editQuiz, category: e.target.value })
+                    : setNewQuiz({ ...newQuiz, category: e.target.value })
+                  }
+                  className="w-full p-3 rounded-lg bg-input border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                  <option value="RPL">Rekayasa Perangkat Lunak</option>
+                  <option value="DKV">Desain Komunikasi Visual</option>
+                  <option value="TKJ">Teknik Komputer Jaringan</option>
+                  <option value="TELKO/TRANS">Teknik Telekomunikasi/Transmisi</option>
+                </select>
+              </div>
               <div className="flex gap-2">
                 <Button onClick={editingId ? handleUpdateQuiz : handleAddQuiz} className="flex-1 bg-primary hover:bg-primary-dark text-background">
                   {editingId ? "Update Quiz" : "Simpan Quiz"}
@@ -260,6 +283,15 @@ export default function AdminQuizzesPage() {
                 <div className="flex gap-4 text-sm text-muted-foreground">
                   <span>{quiz.total_questions} soal</span>
                   <span>Pass: {quiz.passing_score}%</span>
+                  <span className={`px-2 py-1 rounded text-xs ${
+                    quiz.category === 'RPL' ? 'bg-blue-500/20 text-blue-600' :
+                    quiz.category === 'DKV' ? 'bg-purple-500/20 text-purple-600' :
+                    quiz.category === 'TKJ' ? 'bg-green-500/20 text-green-600' :
+                    quiz.category === 'TELKO/TRANS' ? 'bg-orange-500/20 text-orange-600' :
+                    'bg-gray-500/20 text-gray-600'
+                  }`}>
+                    {quiz.category}
+                  </span>
                 </div>
               </div>
               <div className="flex gap-2">

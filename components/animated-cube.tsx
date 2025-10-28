@@ -18,8 +18,11 @@ export default function AnimatedCube() {
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
-    canvas.width = canvas.offsetWidth * 1.5
-    canvas.height = canvas.offsetHeight * 1.5
+    // Check if it's mobile device
+    const isMobile = window.innerWidth <= 768
+
+    canvas.width = canvas.offsetWidth * (isMobile ? 1.2 : 1.5)
+    canvas.height = canvas.offsetHeight * (isMobile ? 1.2 : 1.5)
 
     let animationId: number
 
@@ -30,7 +33,7 @@ export default function AnimatedCube() {
       ctx.translate(canvas.width / 2, canvas.height / 2)
       ctx.scale(0.9, 0.9 * 0.866)
 
-      const size = 150
+      const size = isMobile ? 120 : 150
       const vertices = [
         [-size, -size, -size],
         [size, -size, -size],
@@ -94,8 +97,8 @@ export default function AnimatedCube() {
       })
 
       // Draw orbiting icons
-      const orbitRadius = 260
-      const iconSize = 30
+      const orbitRadius = isMobile ? 200 : 260
+      const iconSize = isMobile ? 24 : 30
       for (let i = 0; i < 4; i++) {
         const angle = orbitRotationRef.current + (i * Math.PI / 2)
         const x = Math.cos(angle) * orbitRadius
@@ -142,8 +145,8 @@ export default function AnimatedCube() {
       if (!isDragging) return
       const deltaX = e.clientX - lastMouseX
       const deltaY = e.clientY - lastMouseY
-      rotationYRef.current += deltaX * 0.01
-      rotationXRef.current += deltaY * 0.01
+      rotationYRef.current += deltaX * (isMobile ? 0.015 : 0.01)
+      rotationXRef.current += deltaY * (isMobile ? 0.015 : 0.01)
       setLastMouseX(e.clientX)
       setLastMouseY(e.clientY)
     }
@@ -152,10 +155,37 @@ export default function AnimatedCube() {
       setIsDragging(false)
     }
 
+    // Touch events for mobile
+    const handleTouchStart = (e: TouchEvent) => {
+      setIsDragging(true)
+      setLastMouseX(e.touches[0].clientX)
+      setLastMouseY(e.touches[0].clientY)
+    }
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!isDragging) return
+      e.preventDefault()
+      const deltaX = e.touches[0].clientX - lastMouseX
+      const deltaY = e.touches[0].clientY - lastMouseY
+      rotationYRef.current += deltaX * 0.02
+      rotationXRef.current += deltaY * 0.02
+      setLastMouseX(e.touches[0].clientX)
+      setLastMouseY(e.touches[0].clientY)
+    }
+
+    const handleTouchEnd = () => {
+      setIsDragging(false)
+    }
+
     canvas.addEventListener("mousedown", handleMouseDown)
     canvas.addEventListener("mousemove", handleMouseMove)
     canvas.addEventListener("mouseup", handleMouseUp)
     canvas.addEventListener("mouseleave", handleMouseUp)
+
+    // Add touch events for mobile
+    canvas.addEventListener("touchstart", handleTouchStart)
+    canvas.addEventListener("touchmove", handleTouchMove)
+    canvas.addEventListener("touchend", handleTouchEnd)
 
     return () => {
       cancelAnimationFrame(animationId)
@@ -163,6 +193,9 @@ export default function AnimatedCube() {
       canvas.removeEventListener("mousemove", handleMouseMove)
       canvas.removeEventListener("mouseup", handleMouseUp)
       canvas.removeEventListener("mouseleave", handleMouseUp)
+      canvas.removeEventListener("touchstart", handleTouchStart)
+      canvas.removeEventListener("touchmove", handleTouchMove)
+      canvas.removeEventListener("touchend", handleTouchEnd)
     }
   }, [isDragging, lastMouseX, lastMouseY])
 

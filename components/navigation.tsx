@@ -74,9 +74,9 @@ export default function Navigation({ user }: { user: any }) {
   return (
     <>
       {/* Mobile Sidebar */}
-      <div className={`fixed inset-0 z-50 md:hidden ${isOpen ? 'block transition-opacity duration-300' : 'hidden'}`}>
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300" onClick={() => setIsOpen(false)} />
-        <div className={`fixed left-0 top-0 h-full w-64 bg-background border-r border-border shadow-2xl transition-transform duration-300 ease-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <div className={`fixed inset-0 z-50 md:hidden ${isOpen ? 'block transition-opacity duration-300 ease-in-out' : 'hidden'}`}>
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ease-in-out" onClick={() => setIsOpen(false)} />
+        <div className={`fixed left-0 top-0 h-full w-64 bg-background border-r border-border shadow-2xl transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`} onClick={(e) => e.stopPropagation()}>
           <div className="flex items-center justify-between p-4 border-b">
             <span className="text-xl font-bold">
               <span className="text-primary">Inno</span>
@@ -85,7 +85,7 @@ export default function Navigation({ user }: { user: any }) {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setIsOpen(false)}
+              onClick={() => setIsOpen(!isOpen)}
               className="hover:bg-accent transition-all duration-200 rounded-full hover:scale-110"
             >
               <X className="h-5 w-5 transition-transform duration-200 hover:rotate-90" />
@@ -210,7 +210,7 @@ export default function Navigation({ user }: { user: any }) {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setIsOpen(true)}
+                onClick={() => setIsOpen(!isOpen)}
                 className="hover:bg-accent transition-all duration-200 rounded-full hover:scale-110"
               >
                 <Menu className="h-5 w-5 transition-transform duration-200 hover:scale-110" />

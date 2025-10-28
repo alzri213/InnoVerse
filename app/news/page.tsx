@@ -8,37 +8,17 @@ interface NewsItem {
   id: string
   title: string
   description: string
-  date: string
+  content?: string
   icon: string
+  published: boolean
+  created_at: string
 }
 
 export default function NewsPage() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<any>(null)
+  const [newsItems, setNewsItems] = useState<NewsItem[]>([])
+  const [loading, setLoading] = useState(true)
   const supabase = createClient()
-
-  const newsItems: NewsItem[] = [
-    {
-      id: "1",
-      title: "Update Teknologi Terbaru",
-      description: "Pelajari tren teknologi terkini yang sedang berkembang di industri.",
-      date: "2025-01-20",
-      icon: "📰",
-    },
-    {
-      id: "2",
-      title: "Tips Belajar Efektif",
-      description: "Strategi dan tips untuk meningkatkan efektivitas belajar programming.",
-      date: "2025-01-18",
-      icon: "💡",
-    },
-    {
-      id: "3",
-      title: "Inovasi di InnoVerse",
-      description: "Fitur-fitur baru yang hadir untuk meningkatkan pengalaman belajar Anda.",
-      date: "2025-01-15",
-      icon: "🚀",
-    },
-  ]
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -48,6 +28,21 @@ export default function NewsPage() {
       setUser(user)
     }
     fetchUser()
+  }, [])
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      const { data: newsData } = await supabase
+        .from("news")
+        .select("*")
+        .eq("published", true)
+        .order("created_at", { ascending: false })
+
+      setNewsItems(newsData || [])
+      setLoading(false)
+    }
+
+    fetchNews()
   }, [])
 
   return (
@@ -60,19 +55,27 @@ export default function NewsPage() {
           <p className="text-lg text-muted-foreground mb-12">Berita dan update terbaru dari InnoVerse</p>
 
           {/* News Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {newsItems.map((item) => (
-              <div
-                key={item.id}
-                className="p-6 rounded-lg bg-gradient-to-br from-muted/20 to-muted/5 border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/20"
-              >
-                <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="text-xl font-bold mb-2 text-foreground">{item.title}</h3>
-                <p className="text-muted-foreground mb-4">{item.description}</p>
-                <p className="text-sm text-muted-foreground">{item.date}</p>
-              </div>
-            ))}
-          </div>
+          {loading ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">Loading news...</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {newsItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="p-6 rounded-lg bg-gradient-to-br from-muted/20 to-muted/5 border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/20"
+                >
+                  <div className="text-4xl mb-4">{item.icon}</div>
+                  <h3 className="text-xl font-bold mb-2 text-foreground">{item.title}</h3>
+                  <p className="text-muted-foreground mb-4">{item.description}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {new Date(item.created_at).toLocaleDateString('id-ID')}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </div>

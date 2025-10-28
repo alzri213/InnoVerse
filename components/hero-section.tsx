@@ -16,7 +16,7 @@ export default function HeroSection() {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary animate-gradient-x bg-size-200 filter drop-shadow-2xl font-black" style={{color:'#ff0000ff', textShadow: '0 0 10px rgba(255, 0, 0, 0.4), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(255, 0, 0, 0.2)', WebkitTextStroke: '0.5px #000000'}}>EDUCATION</span>
           </h1>
           <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium...
+            Platform pembelajaran online terdepan yang menghadirkan pengalaman edukasi teknologi interaktif dan inovatif. Dengan materi yang up-to-date, metode pembelajaran yang menarik, dan komunitas yang mendukung, kami membantu Anda menguasai teknologi masa depan dengan cara yang lebih efektif dan menyenangkan.
           </p>
           <Link href="/games">
             <Button size="lg" className="bg-red-500 hover:bg-red-600 text-white font-semibold shadow-lg hover:shadow-red-500/50 transition-all duration-300 animate-blink-glow animate-float-up-down relative overflow-hidden group">

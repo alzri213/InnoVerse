@@ -111,11 +111,11 @@ export default function QuizPage() {
 
                   {user ? (
                     <Link href={`/quiz/${quiz.id}`}>
-                      <Button className="w-full bg-primary hover:bg-primary-dark text-background">Mulai Quiz</Button>
+                      <Button className="w-full bg-primary hover:bg-primary/90 text-background h-12 font-semibold">Mulai Quiz</Button>
                     </Link>
                   ) : (
                     <Link href="/auth/login">
-                      <Button className="w-full bg-primary hover:bg-primary-dark text-background">
+                      <Button className="w-full bg-primary hover:bg-primary/90 text-background h-12 font-semibold">
                         Login untuk Mulai
                       </Button>
                     </Link>

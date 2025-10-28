@@ -168,16 +168,7 @@ export default function LoginPage() {
               </Button>
             </form>
 
-            <div className="mt-6 p-3 rounded-lg bg-muted/20 border border-muted/30">
-              <p className="text-xs text-muted-foreground text-center font-medium">
-                {isAdminMode ? "Demo Admin: admin@innoverse.com / Admin@123456" : "Demo User: user@example.com / password123"}
-              </p>
-              {!isAdminMode && (
-                <p className="text-xs text-muted-foreground text-center mt-1">
-                  Pastikan email sudah dikonfirmasi sebelum login
-                </p>
-              )}
-            </div>
+
 
             {!isAdminMode && (
               <div className="mt-4 text-center">

@@ -28,10 +28,10 @@ export default async function ContactPage() {
                 <h2 className="text-xl font-semibold mb-4">Informasi Kontak</h2>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <strong>Email:</strong> support@innoverse.com
+                    <strong>Email:</strong> innoverse28@gmail.com
                   </div>
                   <div>
-                    <strong>Telepon:</strong> +62 812-3456-7890
+                    <strong>Telepon:</strong> +62 857-8064-3419
                   </div>
                   <div>
                     <strong>Jam Operasional:</strong> Senin - Jumat, 08:00 - 17:00 WIB
@@ -42,9 +42,9 @@ export default async function ContactPage() {
               <div className="bg-card rounded-lg p-6 border">
                 <h2 className="text-xl font-semibold mb-4">Alamat</h2>
                 <div className="text-sm">
-                  <p>Jl. Teknologi No. 123</p>
-                  <p>Jakarta Selatan, DKI Jakarta 12345</p>
-                  <p>Indonesia</p>
+                  <p>SMK TELEKOMUNIKASI TELESANDI BEKASI</p>
+                  <p>Desa, Mekarsari, Kec. Tambun Sel.</p>
+                  <p>Kabupaten Bekasi, Jawa Barat 17510</p>
                 </div>
               </div>
 

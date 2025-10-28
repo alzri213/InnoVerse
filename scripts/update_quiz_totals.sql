@@ -1,0 +1,20 @@
+-- Update total_questions to match actual question counts (set to 20 for all quizzes)
+UPDATE quizzes SET total_questions = 20 WHERE title = 'HTML Basics Quiz';
+UPDATE quizzes SET total_questions = 20 WHERE title = 'JavaScript Quiz';
+UPDATE quizzes SET total_questions = 20 WHERE title = 'React Quiz';
+UPDATE quizzes SET total_questions = 20 WHERE title = 'Design Principles Quiz';
+UPDATE quizzes SET total_questions = 20 WHERE title = 'Computer Networking Quiz';
+UPDATE quizzes SET total_questions = 20 WHERE title = 'Telecommunications Quiz';
+UPDATE quizzes SET total_questions = 20 WHERE title = 'Database Design Quiz';
+UPDATE quizzes SET total_questions = 20 WHERE title = 'Graphic Design Tools Quiz';
+UPDATE quizzes SET total_questions = 20 WHERE title = 'Color Theory Quiz';
+UPDATE quizzes SET total_questions = 20 WHERE title = 'Typography Quiz';
+UPDATE quizzes SET total_questions = 20 WHERE title = 'Network Security Quiz';
+UPDATE quizzes SET total_questions = 20 WHERE title = 'Wireless Networking Quiz';
+UPDATE quizzes SET total_questions = 20 WHERE title = 'Network Protocols Quiz';
+UPDATE quizzes SET total_questions = 20 WHERE title = 'Mobile Communications Quiz';
+UPDATE quizzes SET total_questions = 20 WHERE title = 'Satellite Communications Quiz';
+UPDATE quizzes SET total_questions = 20 WHERE title = 'Internet Technologies Quiz';
+UPDATE quizzes SET total_questions = 20 WHERE title = 'SQL Fundamentals Quiz';
+UPDATE quizzes SET total_questions = 20 WHERE title = 'NoSQL Databases Quiz';
+UPDATE quizzes SET total_questions = 20 WHERE title = 'Database Security Quiz';
