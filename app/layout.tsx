@@ -1,10 +1,8 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import FloatingAIAssistant from "@/components/floating-ai-assistant"
 import I18nProvider from "@/components/i18n-provider"
 import "@/lib/i18n"
 
@@ -28,10 +26,8 @@ export default function RootLayout({
         <I18nProvider>
           <ThemeProvider>
             {children}
-            <FloatingAIAssistant />
           </ThemeProvider>
         </I18nProvider>
-        <Analytics />
       </body>
     </html>
   )
