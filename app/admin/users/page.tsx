@@ -74,35 +74,35 @@ export default function AdminUsersPage() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h2 className="text-3xl font-bold mb-8 text-foreground">Data Siswa Terbaru</h2>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-foreground">Data Siswa Terbaru</h2>
 
         {/* Users Table */}
         <div className="overflow-x-auto rounded-lg border border-border">
           <table className="w-full">
             <thead className="bg-muted/20 border-b border-border">
               <tr>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Siswa</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Username</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Role</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Bergabung</th>
+                <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-foreground">Siswa</th>
+                <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-foreground">Username</th>
+                <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-foreground">Role</th>
+                <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-foreground">Bergabung</th>
               </tr>
             </thead>
             <tbody>
               {users.map((user) => (
                 <tr key={user.id} className="border-b border-border hover:bg-muted/10 transition">
-                  <td className="px-6 py-4 text-foreground">{user.full_name || "-"}</td>
-                  <td className="px-6 py-4 text-muted-foreground">@{user.username}</td>
-                  <td className="px-6 py-4">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-foreground text-sm sm:text-base">{user.full_name || "-"}</td>
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-muted-foreground text-sm sm:text-base">@{user.username}</td>
+                  <td className="px-3 sm:px-6 py-3 sm:py-4">
                     <span
-                      className={`px-3 py-1 rounded-full text-sm font-medium ${
+                      className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${
                         user.role === "admin" ? "bg-accent/20 text-accent" : "bg-primary/20 text-primary"
                       }`}
                     >
                       {user.role}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-muted-foreground">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-muted-foreground text-sm sm:text-base">
                     {new Date(user.created_at).toLocaleDateString("id-ID")}
                   </td>
                 </tr>

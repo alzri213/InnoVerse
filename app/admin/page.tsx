@@ -111,17 +111,17 @@ export default function AdminDashboard() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Welcome Section */}
-        <div className="mb-12">
-          <h2 className="text-4xl font-bold mb-2 text-foreground">
+        <div className="mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 text-foreground">
             Selamat Datang, <span className="text-primary">Admin!</span>
           </h2>
-          <p className="text-muted-foreground">Kelola platform InnoVerse dengan mudah dan efisien</p>
+          <p className="text-muted-foreground text-sm sm:text-base">Kelola platform InnoVerse dengan mudah dan efisien</p>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12">
           <div className="p-6 rounded-lg bg-gradient-to-br from-muted/20 to-muted/5 border border-border">
             <div className="flex items-center justify-between">
               <div>
@@ -164,62 +164,62 @@ export default function AdminDashboard() {
         </div>
 
         {/* Management Sections */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           <Link href="/admin/materials">
-            <div className="p-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/50 hover:border-primary transition-all cursor-pointer h-full flex flex-col justify-between">
+            <div className="p-4 sm:p-6 lg:p-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/50 hover:border-primary transition-all cursor-pointer h-full flex flex-col justify-between">
               <div>
-                <h3 className="text-2xl font-bold mb-2 text-foreground">Kelola Materi</h3>
-                <p className="text-muted-foreground mb-4">Tambah, edit, atau hapus materi pembelajaran</p>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 text-foreground">Kelola Materi</h3>
+                <p className="text-muted-foreground mb-4 text-sm sm:text-base">Tambah, edit, atau hapus materi pembelajaran</p>
               </div>
               <Button className="bg-primary hover:bg-primary-dark text-background w-full">Kelola Materi →</Button>
             </div>
           </Link>
 
           <Link href="/admin/users">
-            <div className="p-8 rounded-lg bg-gradient-to-br from-accent/20 to-accent/5 border border-accent/50 hover:border-accent transition-all cursor-pointer h-full flex flex-col justify-between">
+            <div className="p-4 sm:p-6 lg:p-8 rounded-lg bg-gradient-to-br from-accent/20 to-accent/5 border border-accent/50 hover:border-accent transition-all cursor-pointer h-full flex flex-col justify-between">
               <div>
-                <h3 className="text-2xl font-bold mb-2 text-foreground">Kelola Pengguna</h3>
-                <p className="text-muted-foreground mb-4">Lihat data pengguna dan progress mereka</p>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 text-foreground">Kelola Pengguna</h3>
+                <p className="text-muted-foreground mb-4 text-sm sm:text-base">Lihat data pengguna dan progress mereka</p>
               </div>
               <Button className="bg-accent hover:bg-accent-dark text-background w-full">Kelola Pengguna →</Button>
             </div>
           </Link>
 
           <Link href="/admin/comments">
-            <div className="p-8 rounded-lg bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/50 hover:border-green-500 transition-all cursor-pointer h-full flex flex-col justify-between">
+            <div className="p-4 sm:p-6 lg:p-8 rounded-lg bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/50 hover:border-green-500 transition-all cursor-pointer h-full flex flex-col justify-between">
               <div>
-                <h3 className="text-2xl font-bold mb-2 text-foreground">Kelola Komentar</h3>
-                <p className="text-muted-foreground mb-4">Kelola komentar public chat dan moderasi pesan</p>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 text-foreground">Kelola Komentar</h3>
+                <p className="text-muted-foreground mb-4 text-sm sm:text-base">Kelola komentar public chat dan moderasi pesan</p>
               </div>
               <Button className="bg-green-500 hover:bg-green-600 text-white dark:text-white w-full">Kelola Komentar →</Button>
             </div>
           </Link>
 
           <Link href="/admin/quizzes">
-            <div className="p-8 rounded-lg bg-gradient-to-br from-secondary/20 to-secondary/5 border border-secondary/50 hover:border-secondary transition-all cursor-pointer h-full flex flex-col justify-between">
+            <div className="p-4 sm:p-6 lg:p-8 rounded-lg bg-gradient-to-br from-secondary/20 to-secondary/5 border border-secondary/50 hover:border-secondary transition-all cursor-pointer h-full flex flex-col justify-between">
               <div>
-                <h3 className="text-2xl font-bold mb-2 text-foreground">Kelola Quiz</h3>
-                <p className="text-muted-foreground mb-4">Buat dan kelola quiz untuk materi pembelajaran</p>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 text-foreground">Kelola Quiz</h3>
+                <p className="text-muted-foreground mb-4 text-sm sm:text-base">Buat dan kelola quiz untuk materi pembelajaran</p>
               </div>
               <Button variant="outline" className="w-full">Kelola Quiz →</Button>
             </div>
           </Link>
 
           <Link href="/admin/news">
-            <div className="p-8 rounded-lg bg-gradient-to-br from-muted/20 to-muted/5 border border-border hover:border-primary transition-all cursor-pointer h-full flex flex-col justify-between">
+            <div className="p-4 sm:p-6 lg:p-8 rounded-lg bg-gradient-to-br from-muted/20 to-muted/5 border border-border hover:border-primary transition-all cursor-pointer h-full flex flex-col justify-between">
               <div>
-                <h3 className="text-2xl font-bold mb-2 text-foreground">Kelola Berita</h3>
-                <p className="text-muted-foreground mb-4">Tambah, edit, dan kelola berita platform</p>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 text-foreground">Kelola Berita</h3>
+                <p className="text-muted-foreground mb-4 text-sm sm:text-base">Tambah, edit, dan kelola berita platform</p>
               </div>
               <Button variant="outline" className="w-full">Kelola Berita →</Button>
             </div>
           </Link>
 
           {/* Placeholder for future features */}
-          <div className="p-8 rounded-lg bg-gradient-to-br from-gray-500/10 to-gray-500/5 border border-gray-500/20 h-full flex flex-col justify-center items-center">
+          <div className="p-4 sm:p-6 lg:p-8 rounded-lg bg-gradient-to-br from-gray-500/10 to-gray-500/5 border border-gray-500/20 h-full flex flex-col justify-center items-center">
             <div className="text-center">
-              <div className="text-4xl mb-2">🚀</div>
-              <p className="text-muted-foreground">Fitur Mendatang</p>
+              <div className="text-3xl sm:text-4xl mb-2">🚀</div>
+              <p className="text-muted-foreground text-sm sm:text-base">Fitur Mendatang</p>
             </div>
           </div>
         </div>

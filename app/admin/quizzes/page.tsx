@@ -173,10 +173,10 @@ export default function AdminQuizzesPage() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-bold text-foreground">Kelola Quiz</h2>
-          <Button onClick={() => editingId ? handleCancelEdit() : setIsAdding(!isAdding)} className="bg-primary hover:bg-primary-dark text-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-4">
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Kelola Quiz</h2>
+          <Button onClick={() => editingId ? handleCancelEdit() : setIsAdding(!isAdding)} className="bg-primary hover:bg-primary-dark text-background w-full sm:w-auto">
             {isAdding ? "Batal" : "+ Tambah Quiz"}
           </Button>
         </div>
@@ -213,7 +213,7 @@ export default function AdminQuizzesPage() {
                   rows={3}
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-2">Total Soal</label>
                   <Input
@@ -275,12 +275,12 @@ export default function AdminQuizzesPage() {
           {quizzes.map((quiz) => (
             <div
               key={quiz.id}
-              className="p-6 rounded-lg bg-gradient-to-br from-muted/20 to-muted/5 border border-border flex justify-between items-start"
+              className="p-4 sm:p-6 rounded-lg bg-gradient-to-br from-muted/20 to-muted/5 border border-border flex flex-col lg:flex-row justify-between items-start gap-4"
             >
-              <div className="flex-1">
-                <h3 className="text-xl font-bold text-foreground mb-2">{quiz.title}</h3>
-                <p className="text-muted-foreground mb-3">{quiz.description}</p>
-                <div className="flex gap-4 text-sm text-muted-foreground">
+              <div className="flex-1 w-full">
+                <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2">{quiz.title}</h3>
+                <p className="text-muted-foreground mb-3 text-sm sm:text-base">{quiz.description}</p>
+                <div className="flex flex-wrap gap-4 text-xs sm:text-sm text-muted-foreground">
                   <span>{quiz.total_questions} soal</span>
                   <span>Pass: {quiz.passing_score}%</span>
                   <span className={`px-2 py-1 rounded text-xs ${
@@ -294,18 +294,18 @@ export default function AdminQuizzesPage() {
                   </span>
                 </div>
               </div>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2 w-full lg:w-auto lg:ml-4">
                 <Button
                   onClick={() => handleEditQuiz(quiz)}
                   variant="outline"
-                  className="text-primary border-primary hover:bg-primary/10"
+                  className="flex-1 lg:flex-initial text-primary border-primary hover:bg-primary/10"
                 >
                   Edit
                 </Button>
                 <Button
                   onClick={() => handleDeleteQuiz(quiz.id)}
                   variant="outline"
-                  className="text-error border-error hover:bg-error/10"
+                  className="flex-1 lg:flex-initial text-error border-error hover:bg-error/10"
                 >
                   Hapus
                 </Button>

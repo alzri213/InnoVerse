@@ -186,10 +186,10 @@ export default function AdminNewsPage() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-bold text-foreground">Kelola Berita</h2>
-          <Button onClick={() => editingId ? handleCancelEdit() : setIsAdding(!isAdding)} className="bg-primary hover:bg-primary-dark text-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-4">
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Kelola Berita</h2>
+          <Button onClick={() => editingId ? handleCancelEdit() : setIsAdding(!isAdding)} className="bg-primary hover:bg-primary-dark text-background w-full sm:w-auto">
             {isAdding ? "Batal" : "+ Tambah Berita"}
           </Button>
         </div>
@@ -239,7 +239,7 @@ export default function AdminNewsPage() {
                   rows={5}
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-2">Ikon</label>
                   <Input
@@ -285,47 +285,47 @@ export default function AdminNewsPage() {
           {news.map((item) => (
             <div
               key={item.id}
-              className="p-6 rounded-lg bg-gradient-to-br from-muted/20 to-muted/5 border border-border flex justify-between items-start"
+              className="p-6 rounded-lg bg-gradient-to-br from-muted/20 to-muted/5 border border-border flex flex-col lg:flex-row justify-between items-start gap-4"
             >
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="text-3xl">{item.icon}</div>
-                  <div>
-                    <h3 className="text-xl font-bold text-foreground">{item.title}</h3>
-                    <div className="flex items-center gap-2">
+              <div className="flex-1 w-full">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-2">
+                  <div className="text-2xl sm:text-3xl">{item.icon}</div>
+                  <div className="flex-1">
+                    <h3 className="text-lg sm:text-xl font-bold text-foreground">{item.title}</h3>
+                    <div className="flex flex-wrap items-center gap-2 mt-1">
                       <span className={`px-2 py-1 rounded text-xs ${item.published ? 'bg-green-500/20 text-green-600' : 'bg-gray-500/20 text-gray-600'}`}>
                         {item.published ? 'Published' : 'Draft'}
                       </span>
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-xs sm:text-sm text-muted-foreground">
                         {new Date(item.created_at).toLocaleDateString('id-ID')}
                       </span>
                     </div>
                   </div>
                 </div>
-                <p className="text-muted-foreground mb-3">{item.description}</p>
+                <p className="text-muted-foreground mb-3 text-sm sm:text-base">{item.description}</p>
                 {item.content && (
-                  <p className="text-sm text-muted-foreground line-clamp-2">{item.content}</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">{item.content}</p>
                 )}
               </div>
-              <div className="flex gap-2 ml-4">
+              <div className="flex flex-wrap gap-2 w-full lg:w-auto lg:ml-4">
                 <Button
                   onClick={() => togglePublished(item.id, item.published)}
                   variant="outline"
-                  className={item.published ? "text-orange-600 border-orange-600 hover:bg-orange-50" : "text-green-600 border-green-600 hover:bg-green-50"}
+                  className={`flex-1 lg:flex-initial ${item.published ? "text-orange-600 border-orange-600 hover:bg-orange-50" : "text-green-600 border-green-600 hover:bg-green-50"}`}
                 >
                   {item.published ? "Unpublish" : "Publish"}
                 </Button>
                 <Button
                   onClick={() => handleEditNews(item)}
                   variant="outline"
-                  className="text-primary border-primary hover:bg-primary/10"
+                  className="flex-1 lg:flex-initial text-primary border-primary hover:bg-primary/10"
                 >
                   Edit
                 </Button>
                 <Button
                   onClick={() => handleDeleteNews(item.id)}
                   variant="outline"
-                  className="text-error border-error hover:bg-error/10"
+                  className="flex-1 lg:flex-initial text-error border-error hover:bg-error/10"
                 >
                   Hapus
                 </Button>

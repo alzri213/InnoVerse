@@ -165,23 +165,23 @@ export default function AdminCommentsPage() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-bold text-foreground">Kelola Komentar Public Chat</h2>
-          <div className="flex items-center gap-4">
-            <div className="relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-4">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">Kelola Komentar Public Chat</h2>
+          <div className="flex items-center gap-4 w-full sm:w-auto">
+            <div className="relative flex-1 sm:flex-initial">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
               <Input
                 placeholder="Cari komentar..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 w-64"
+                className="pl-10 w-full sm:w-64"
               />
             </div>
           </div>
         </div>
 
-        <div className="mb-6 flex gap-4 text-sm">
+        <div className="mb-6 flex flex-wrap gap-4 text-sm">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
             <span>Aktif ({comments.filter(c => !c.is_moderated).length})</span>
@@ -208,15 +208,15 @@ export default function AdminCommentsPage() {
             filteredComments.map((comment) => (
               <div
                 key={comment.id}
-                className={`p-6 rounded-lg border transition-all ${
+                className={`p-4 sm:p-6 rounded-lg border transition-all ${
                   comment.is_moderated
                     ? 'bg-red-50 border-red-200 dark:bg-red-950/20 dark:border-red-800'
                     : 'bg-gradient-to-br from-muted/20 to-muted/5 border-border'
                 }`}
               >
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
+                <div className="flex flex-col lg:flex-row justify-between items-start gap-4">
+                  <div className="flex-1 w-full">
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
                       <div className="flex items-center gap-2">
                         <User className="w-4 h-4 text-muted-foreground" />
                         <span className="font-semibold text-foreground">{comment.username}</span>
@@ -250,15 +250,15 @@ export default function AdminCommentsPage() {
                       <p className="text-foreground whitespace-pre-wrap">{comment.message}</p>
                     </div>
                   </div>
-                  <div className="flex gap-2 ml-4">
+                  <div className="flex flex-wrap gap-2 w-full lg:w-auto lg:ml-4">
                     <Button
                       onClick={() => toggleModerateComment(comment.id, comment.is_moderated)}
                       variant="outline"
                       size="sm"
-                      className={comment.is_moderated
+                      className={`flex-1 lg:flex-initial ${comment.is_moderated
                         ? "text-green-600 border-green-600 hover:bg-green-50 dark:text-green-400 dark:border-green-400 dark:hover:bg-green-950/20"
                         : "text-orange-600 border-orange-600 hover:bg-orange-50 dark:text-orange-400 dark:border-orange-400 dark:hover:bg-orange-950/20"
-                      }
+                      }`}
                     >
                       {comment.is_moderated ? "Unmoderate" : "Moderate"}
                     </Button>
@@ -266,9 +266,10 @@ export default function AdminCommentsPage() {
                       onClick={() => handleDeleteComment(comment.id)}
                       variant="outline"
                       size="sm"
-                      className="text-red-600 border-red-600 hover:bg-red-50 dark:text-red-400 dark:border-red-400 dark:hover:bg-red-950/20"
+                      className="flex-1 lg:flex-initial text-red-600 border-red-600 hover:bg-red-50 dark:text-red-400 dark:border-red-400 dark:hover:bg-red-950/20"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <Trash2 className="w-4 h-4 lg:mr-1" />
+                      <span className="lg:inline hidden">Hapus</span>
                     </Button>
                   </div>
                 </div>
