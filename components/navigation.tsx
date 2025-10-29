@@ -74,9 +74,9 @@ export default function Navigation({ user }: { user: any }) {
   return (
     <>
       {/* Mobile Sidebar */}
-      <div className={`fixed inset-0 z-50 md:hidden ${isOpen ? 'block transition-opacity duration-300 ease-in-out' : 'hidden'}`}>
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ease-in-out" onClick={() => setIsOpen(false)} />
-        <div className={`fixed left-0 top-0 h-full w-64 bg-background border-r border-border shadow-2xl transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`} onClick={(e) => e.stopPropagation()}>
+      <div className={`fixed inset-0 z-50 md:hidden ${isOpen ? 'block transition-opacity duration-500 ease-out' : 'hidden'}`}>
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-500 ease-out" onClick={() => setIsOpen(false)} />
+        <div className={`fixed left-0 top-0 h-full w-64 bg-background border-r border-border shadow-2xl transition-transform duration-500 ease-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`} onClick={(e) => e.stopPropagation()}>
           <div className="flex items-center justify-between p-4 border-b">
             <span className="text-xl font-bold">
               <span className="text-primary">Inno</span>

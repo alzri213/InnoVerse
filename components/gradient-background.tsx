@@ -4,6 +4,16 @@ import { useEffect, useState } from "react"
 
 export default function GradientBackground() {
   const [scrollY, setScrollY] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
@@ -68,10 +78,13 @@ export default function GradientBackground() {
           ))}
         </div>
 
-        {/* Glowing particles */}
-        <div className="absolute top-1/3 left-1/3 w-2 h-2 bg-cyan-400 rounded-full animate-ping opacity-60"></div>
-        <div className="absolute top-2/3 right-1/3 w-1 h-1 bg-pink-400 rounded-full animate-ping opacity-80" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute bottom-1/3 left-2/3 w-1.5 h-1.5 bg-purple-400 rounded-full animate-ping opacity-50" style={{ animationDelay: '2s' }}></div>
+        {/* Glowing particles - reduced for performance */}
+        {!isMobile && (
+          <>
+            <div className="absolute top-1/3 left-1/3 w-2 h-2 bg-cyan-400 rounded-full animate-ping opacity-60"></div>
+            <div className="absolute top-2/3 right-1/3 w-1 h-1 bg-pink-400 rounded-full animate-ping opacity-80" style={{ animationDelay: '1s' }}></div>
+          </>
+        )}
 
         {/* Data flow lines */}
         <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 1000 1000">
