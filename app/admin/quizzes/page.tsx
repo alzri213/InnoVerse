@@ -79,6 +79,7 @@ export default function AdminQuizzesPage() {
       .insert([
         {
           ...newQuiz,
+          total_questions: 20, // Always 20 questions
           created_by: user.id,
         },
       ])
@@ -114,7 +115,10 @@ export default function AdminQuizzesPage() {
 
     const { data, error } = await supabase
       .from("quizzes")
-      .update(editQuiz)
+      .update({
+        ...editQuiz,
+        total_questions: 20, // Always 20 questions
+      })
       .eq("id", editingId)
       .select()
 
@@ -218,14 +222,11 @@ export default function AdminQuizzesPage() {
                   <label className="block text-sm font-medium mb-2">Total Soal</label>
                   <Input
                     type="number"
-                    value={editingId ? editQuiz.total_questions : newQuiz.total_questions}
-                    onChange={(e) =>
-                      editingId
-                        ? setEditQuiz({ ...editQuiz, total_questions: Number.parseInt(e.target.value) })
-                        : setNewQuiz({ ...newQuiz, total_questions: Number.parseInt(e.target.value) })
-                    }
-                    className="bg-input border-border"
+                    value={20}
+                    disabled
+                    className="bg-muted border-border cursor-not-allowed"
                   />
+                  <p className="text-xs text-muted-foreground mt-1">Semua quiz harus memiliki tepat 20 soal</p>
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2">Nilai Lulus (%)</label>

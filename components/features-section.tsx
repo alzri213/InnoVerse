@@ -4,8 +4,13 @@ import { useState, useEffect } from "react"
 
 export default function FeaturesSection() {
   const [displayText, setDisplayText] = useState("")
-  const fullText = "Media belajar kurang interaktif...?"
+  const texts = [
+    "Media belajar kurang interaktif...?",
+    "Mari belajar teknologi bersama!",
+    "InnoVerse siap membantu Anda."
+  ]
   const [isTyping, setIsTyping] = useState(true)
+  const [currentTextIndex, setCurrentTextIndex] = useState(0)
 
   useEffect(() => {
     let index = 0
@@ -15,10 +20,12 @@ export default function FeaturesSection() {
     const timer = setInterval(() => {
       if (isPaused) return // Skip if paused
 
+      const currentFullText = texts[currentTextIndex]
+
       if (!isDeleting) {
         // Typing phase
-        if (index < fullText.length) {
-          setDisplayText(fullText.slice(0, index + 1))
+        if (index < currentFullText.length) {
+          setDisplayText(currentFullText.slice(0, index + 1))
           index++
         } else {
           // Finished typing, pause for 3 seconds before deleting
@@ -32,21 +39,22 @@ export default function FeaturesSection() {
         // Deleting phase - slow deletion
         if (index > 0) {
           index--
-          setDisplayText(fullText.slice(0, index))
+          setDisplayText(currentFullText.slice(0, index))
         } else {
-          // Finished deleting, pause for 3 seconds before restarting
+          // Finished deleting current text, switch to next text
           isPaused = true
           setTimeout(() => {
+            setCurrentTextIndex((prev) => (prev + 1) % texts.length)
             isDeleting = false
             isPaused = false
             setIsTyping(true)
-          }, 3000)
+          }, 1000) // Short pause before switching texts
         }
       }
     }, isDeleting ? 200 : 100) // Slower deletion (200ms) vs typing (100ms)
 
     return () => clearInterval(timer)
-  }, [])
+  }, [currentTextIndex])
 
   const features = [
     {

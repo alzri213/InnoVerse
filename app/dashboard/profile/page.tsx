@@ -299,7 +299,7 @@ export default function ProfilePage() {
           </Link>
           <Link href="/dashboard">
             <Button className="bg-primary/20 hover:bg-primary/30 text-primary border border-primary/50">
-              Kembali ke Dashboard
+              Kembali
             </Button>
           </Link>
         </div>

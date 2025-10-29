@@ -95,7 +95,7 @@ export default function AdminDashboard() {
           <div className="flex items-center gap-4">
             <ThemeLanguageToggle />
             <Link href="/dashboard">
-              <Button variant="outline">← Kembali ke Dashboard</Button>
+              <Button variant="outline">← Kembali</Button>
             </Link>
 
             <Button

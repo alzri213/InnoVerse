@@ -8,8 +8,7 @@ export default function NotFound() {
         </p>
         <a
           href="/"
-          className="px-4 py-2 bg-primary text-background rounded hover:bg-primary/90"
-        >
+          className="px-4 py-2 bg-primary text-background rounded hover:bg-primary/90">
           Go Home
         </a>
       </div>

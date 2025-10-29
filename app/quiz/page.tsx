@@ -64,11 +64,10 @@ export default function QuizPage() {
                 <button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                    selectedCategory === category.id
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${selectedCategory === category.id
                       ? `${category.color} ring-2 ring-offset-2 ring-primary shadow-lg transform scale-105`
                       : 'bg-muted text-muted-foreground hover:bg-muted/80'
-                  }`}
+                    }`}
                 >
                   {category.name}
                 </button>
@@ -92,13 +91,12 @@ export default function QuizPage() {
                     <div>
                       <h3 className="text-xl font-bold mb-2 text-foreground">{quiz.title}</h3>
                       <p className="text-muted-foreground text-sm mb-2">{quiz.description}</p>
-                      <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
-                        quiz.category === 'RPL' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
-                        quiz.category === 'DKV' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' :
-                        quiz.category === 'TKJ' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
-                        quiz.category === 'TELKO/TRANS' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200' :
-                        'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
-                      }`}>
+                      <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${quiz.category === 'RPL' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
+                          quiz.category === 'DKV' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' :
+                            quiz.category === 'TKJ' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
+                              quiz.category === 'TELKO/TRANS' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200' :
+                                'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
+                        }`}>
                         {quiz.category}
                       </span>
                     </div>
