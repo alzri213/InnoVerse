@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import AnimatedSection from "@/components/animated-section"
-import AnimatedText from "@/components/animated-text"
 import { motion } from "framer-motion"
 
 export default function FeaturesSection() {
@@ -31,12 +30,12 @@ export default function FeaturesSection() {
           setDisplayText(currentFullText.slice(0, index + 1))
           index++
         } else {
-          // Finished typing, pause for 3 seconds before deleting
+          // Finished typing, pause for 2 seconds before deleting
           isPaused = true
           setTimeout(() => {
             isDeleting = true
             isPaused = false
-          }, 3000)
+          }, 2000)
         }
       } else {
         // Deleting phase - slow deletion
@@ -80,14 +79,15 @@ export default function FeaturesSection() {
         {/* Typing Text */}
         <AnimatedSection delay={0.1}>
           <div className="text-center mb-20 -mt-8">
-            <AnimatedText
-              type="characters"
-              staggerChildren={0.05}
+            <motion.div
               className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
             >
               {displayText}
-            </AnimatedText>
-            {isTyping && <span className="animate-pulse">|</span>}
+              {isTyping && <span className="animate-pulse">|</span>}
+            </motion.div>
           </div>
         </AnimatedSection>
 
