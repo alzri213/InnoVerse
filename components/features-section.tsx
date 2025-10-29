@@ -1,6 +1,9 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import AnimatedSection from "@/components/animated-section"
+import AnimatedText from "@/components/animated-text"
+import { motion } from "framer-motion"
 
 export default function FeaturesSection() {
   const [displayText, setDisplayText] = useState("")
@@ -75,29 +78,57 @@ export default function FeaturesSection() {
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-6xl mx-auto">
         {/* Typing Text */}
-        <div className="text-center mb-20 -mt-8">
-          <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-2">
-            {displayText}
+        <AnimatedSection delay={0.1}>
+          <div className="text-center mb-20 -mt-8">
+            <AnimatedText
+              type="characters"
+              staggerChildren={0.05}
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-2"
+            >
+              {displayText}
+            </AnimatedText>
             {isTyping && <span className="animate-pulse">|</span>}
-          </h3>
-        </div>
+          </div>
+        </AnimatedSection>
 
-        <h2 className="text-4xl font-bold text-center mb-4 text-foreground">
-          About <span className="text-primary" style={{color:'#007bffff'}}>Inno</span>
-          <span className="text-primary" style={{color:'#ff0000ff'}}>Verse</span>
-        </h2>
-        <div className="w-24 h-1 bg-gradient-to-r from-primary to-accent mx-auto mb-12" />
+        <AnimatedSection delay={0.3}>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 text-foreground">
+              About <span className="text-primary" style={{color:'#007bffff'}}>Inno</span>
+              <span className="text-primary" style={{color:'#ff0000ff'}}>Verse</span>
+            </h2>
+            <motion.div
+              className="w-24 h-1 bg-gradient-to-r from-primary to-accent mx-auto"
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              viewport={{ once: true }}
+            />
+          </div>
+        </AnimatedSection>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {features.map((feature, index) => (
-            <div
-              key={index}
-              className="p-8 rounded-lg bg-gradient-to-br from-muted/20 to-muted/5 border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/20"
-            >
-              <div className="text-4xl mb-4">{feature.icon}</div>
-              <h3 className="text-2xl font-bold mb-4 text-foreground">{feature.title}</h3>
-              <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-            </div>
+            <AnimatedSection key={index} delay={0.5 + index * 0.2}>
+              <motion.div
+                className="p-8 rounded-lg bg-gradient-to-br from-muted/20 to-muted/5 border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/20"
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 20px 40px rgba(0, 217, 255, 0.1)"
+                }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              >
+                <motion.div
+                  className="text-4xl mb-4"
+                  whileHover={{ scale: 1.2, rotate: 10 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  {feature.icon}
+                </motion.div>
+                <h3 className="text-2xl font-bold mb-4 text-foreground">{feature.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+              </motion.div>
+            </AnimatedSection>
           ))}
         </div>
       </div>

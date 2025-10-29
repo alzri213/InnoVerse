@@ -165,8 +165,58 @@ export default function MaterialDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">Loading material...</p>
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/10 flex items-center justify-center relative overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-primary/10 rounded-full blur-xl animate-pulse"></div>
+          <div className="absolute top-3/4 right-1/4 w-24 h-24 bg-accent/10 rounded-full blur-xl animate-pulse delay-1000"></div>
+          <div className="absolute bottom-1/4 left-1/3 w-20 h-20 bg-purple-500/10 rounded-full blur-xl animate-pulse delay-500"></div>
+        </div>
+
+        {/* Main loading content */}
+        <div className="relative z-10 text-center">
+          {/* Logo */}
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold mb-2">
+              <span className="text-primary animate-pulse">Inno</span>
+              <span className="text-accent animate-pulse delay-200">Verse</span>
+            </h1>
+            <div className="w-16 h-1 bg-gradient-to-r from-primary to-accent rounded-full mx-auto animate-pulse delay-500"></div>
+          </div>
+
+          {/* Loading animation */}
+          <div className="mb-6">
+            <div className="flex justify-center space-x-2 mb-4">
+              <div className="w-3 h-3 bg-primary rounded-full animate-bounce"></div>
+              <div className="w-3 h-3 bg-accent rounded-full animate-bounce delay-100"></div>
+              <div className="w-3 h-3 bg-purple-500 rounded-full animate-bounce delay-200"></div>
+            </div>
+
+            {/* Progress bar */}
+            <div className="w-64 h-2 bg-muted rounded-full overflow-hidden mx-auto">
+              <div className="h-full bg-gradient-to-r from-primary via-accent to-purple-500 rounded-full animate-pulse"></div>
+            </div>
+          </div>
+
+          {/* Loading text */}
+          <div className="space-y-2">
+            <p className="text-lg font-medium text-foreground animate-pulse">Memuat Materi Pembelajaran</p>
+            <p className="text-sm text-muted-foreground animate-pulse delay-300">Mohon tunggu sebentar...</p>
+          </div>
+
+          {/* Floating elements */}
+          <div className="absolute -top-8 -left-8 w-4 h-4 bg-primary/30 rounded-full animate-ping"></div>
+          <div className="absolute -bottom-8 -right-8 w-3 h-3 bg-accent/30 rounded-full animate-ping delay-700"></div>
+          <div className="absolute top-1/2 -right-12 w-2 h-2 bg-purple-500/30 rounded-full animate-ping delay-1000"></div>
+        </div>
+
+        {/* Subtle pattern overlay */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                             radial-gradient(circle at 75% 75%, rgba(168, 85, 247, 0.1) 0%, transparent 50%)`
+          }}></div>
+        </div>
       </div>
     )
   }
@@ -228,9 +278,13 @@ export default function MaterialDetailPage() {
                 </div>
                 <div className="w-full bg-muted rounded-full h-4 overflow-hidden shadow-inner">
                   <div
-                    className="bg-primary h-4 rounded-full transition-all duration-1000 ease-out animate-pulse-luxury shadow-lg shadow-primary/50"
+                    className="bg-gradient-to-r from-primary to-accent h-4 rounded-full transition-all duration-1000 ease-out shadow-lg shadow-primary/50"
                     style={{ width: `${progress}%` }}
                   />
+                </div>
+                <div className="flex justify-between text-xs text-muted-foreground mt-2">
+                  <span>Media Belajar Kurang Interaktif</span>
+                  <span>Selanjutnya</span>
                 </div>
               </div>
             </div>
@@ -251,44 +305,44 @@ export default function MaterialDetailPage() {
             )}
 
             {/* Material Content 1 */}
-            <div className="p-8 rounded-lg bg-gradient-to-br from-muted/20 to-muted/5 border border-border mb-8">
+            <div className="p-6 rounded-lg bg-card border border-border mb-6">
               <div className="prose prose-invert max-w-none">
-                <p className="text-foreground leading-relaxed whitespace-pre-wrap">{material.content}</p>
+                <p className="text-foreground leading-relaxed whitespace-pre-wrap text-base">{material.content || "Konten belum tersedia"}</p>
               </div>
             </div>
 
             {/* Material Content 2 */}
-            {showContent2 && material.content2 && (
-              <div className="p-8 rounded-lg bg-gradient-to-br from-muted/20 to-muted/5 border border-border mb-8">
+            {showContent2 && (
+              <div className="p-6 rounded-lg bg-card border border-border mb-6">
                 <div className="prose prose-invert max-w-none">
-                  <p className="text-foreground leading-relaxed whitespace-pre-wrap">{material.content2}</p>
+                  <p className="text-foreground leading-relaxed whitespace-pre-wrap text-base">{material.content2 || "Konten belum tersedia"}</p>
                 </div>
               </div>
             )}
 
             {/* Material Content 3 */}
-            {showContent3 && material.content3 && (
-              <div className="p-8 rounded-lg bg-gradient-to-br from-muted/20 to-muted/5 border border-border mb-8">
+            {showContent3 && (
+              <div className="p-6 rounded-lg bg-card border border-border mb-6">
                 <div className="prose prose-invert max-w-none">
-                  <p className="text-foreground leading-relaxed whitespace-pre-wrap">{material.content3}</p>
+                  <p className="text-foreground leading-relaxed whitespace-pre-wrap text-base">{material.content3 || "Konten belum tersedia"}</p>
                 </div>
               </div>
             )}
 
             {/* Material Content 4 */}
-            {showContent4 && material.content4 && (
-              <div className="p-8 rounded-lg bg-gradient-to-br from-muted/20 to-muted/5 border border-border mb-8">
+            {showContent4 && (
+              <div className="p-6 rounded-lg bg-card border border-border mb-6">
                 <div className="prose prose-invert max-w-none">
-                  <p className="text-foreground leading-relaxed whitespace-pre-wrap">{material.content4}</p>
+                  <p className="text-foreground leading-relaxed whitespace-pre-wrap text-base">{material.content4 || "Konten belum tersedia"}</p>
                 </div>
               </div>
             )}
 
             {/* Material Content 5 */}
-            {showContent5 && material.content5 && (
-              <div className="p-8 rounded-lg bg-gradient-to-br from-muted/20 to-muted/5 border border-border mb-8">
+            {showContent5 && (
+              <div className="p-6 rounded-lg bg-card border border-border mb-6">
                 <div className="prose prose-invert max-w-none">
-                  <p className="text-foreground leading-relaxed whitespace-pre-wrap">{material.content5}</p>
+                  <p className="text-foreground leading-relaxed whitespace-pre-wrap text-base">{material.content5 || "Konten belum tersedia"}</p>
                 </div>
               </div>
             )}
@@ -298,29 +352,39 @@ export default function MaterialDetailPage() {
               {progress < 100 && (
                 <Button
                   onClick={() => handleUpdateProgress(Math.min(progress + 25, 100))}
-                  className="bg-primary hover:bg-primary-dark text-background dark:hover:text-foreground"
+                  className="bg-primary hover:bg-primary/90 text-background"
                 >
-                  Lanjutkan Pembelajaran
+                  Lanjutkan Pembelajaran →
                 </Button>
               )}
 
               {progress === 100 && nextMaterial && (
-                <div className="flex items-center gap-2 text-success">
-                  <span className="text-2xl">✓</span>
-                  <span className="font-semibold">Materi Selesai! Anda dapat melanjutkan ke materi berikutnya.</span>
+                <div className="w-full p-4 rounded-lg bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 mb-4">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl">🎉</span>
+                    <div>
+                      <h4 className="font-semibold text-green-800 dark:text-green-400">Materi Selesai!</h4>
+                      <p className="text-sm text-green-700 dark:text-green-500">Anda dapat melanjutkan ke materi berikutnya.</p>
+                    </div>
+                  </div>
                 </div>
               )}
 
               {progress === 100 && !nextMaterial && (
-                <div className="flex items-center gap-2 text-success">
-                  <span className="text-2xl">✓</span>
-                  <span className="font-semibold">Selamat! Anda telah menyelesaikan semua materi di kategori ini!</span>
+                <div className="w-full p-4 rounded-lg bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 mb-4">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl">🏆</span>
+                    <div>
+                      <h4 className="font-semibold text-blue-800 dark:text-blue-400">Selamat!</h4>
+                      <p className="text-sm text-blue-700 dark:text-blue-500">Anda telah menyelesaikan semua materi di kategori ini!</p>
+                    </div>
+                  </div>
                 </div>
               )}
 
               {progress === 100 && nextMaterial && (
                 <Link href={`/materials/${nextMaterial.id}`}>
-                  <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-background dark:hover:text-foreground">
+                  <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-background">
                     Materi Berikutnya: {nextMaterial.title}
                   </Button>
                 </Link>
@@ -330,14 +394,16 @@ export default function MaterialDetailPage() {
                 <Button
                   onClick={handleRestartMaterial}
                   variant="outline"
-                  className="border-accent text-accent hover:bg-accent hover:text-background dark:hover:text-foreground"
+                  className="border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white"
                 >
                   🔄 Mengulang Materi
                 </Button>
               )}
 
               <Link href="/quiz">
-                <Button variant="outline" className="hover:bg-primary hover:text-primary-foreground dark:hover:text-foreground">Ikuti Quiz</Button>
+                <Button variant="outline" className="hover:bg-primary hover:text-primary-foreground">
+                  📝 Ikuti Quiz
+                </Button>
               </Link>
             </div>
           </div>

@@ -17,22 +17,14 @@ interface ClickParticle {
   velocity: { x: number; y: number }
 }
 
-interface FallingStar {
-  id: number
-  x: number
-  y: number
-  size: number
-  speed: number
-  opacity: number
-  trail: { x: number; y: number }[]
-}
+
 
 export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const { t } = useTranslation()
   const [isVisible, setIsVisible] = useState(false)
   const [progress, setProgress] = useState(0)
   const [clickParticles, setClickParticles] = useState<ClickParticle[]>([])
-  const [fallingStars, setFallingStars] = useState<FallingStar[]>([])
+
   const [particleId, setParticleId] = useState(0)
   const [lastClickTime, setLastClickTime] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
@@ -48,66 +40,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  // Generate falling stars with mobile optimization
-  useEffect(() => {
-    const createFallingStars = () => {
-      const stars: FallingStar[] = []
-      const numStars = isMobile ? Math.floor(Math.random() * 3) + 3 : Math.floor(Math.random() * 6) + 8 // 3-5 stars on mobile, 8-13 on desktop
 
-      for (let i = 0; i < numStars; i++) {
-        const speed = Math.random() * 2 + 0.2 // Slower speed for better performance
-        stars.push({
-          id: i,
-          x: Math.random() * window.innerWidth * 0.5,
-          y: Math.random() * window.innerHeight * 0.5,
-          size: Math.random() * 6 + 4, // Smaller size: 4-10px
-          speed: speed,
-          opacity: Math.random() * 0.3 + 0.6, // Slightly lower opacity
-          trail: []
-        })
-      }
-      setFallingStars(stars)
-    }
-
-    createFallingStars()
-
-    // Animate falling stars with slower interval for mobile
-    const animateStars = () => {
-      setFallingStars(prev => prev.map(star => {
-        const newX = star.x + star.speed * 2 // Slower movement
-        const newY = star.y + star.speed * 1.5
-
-        let resetStar = false
-        if (newX > window.innerWidth + 50 || newY > window.innerHeight + 50) {
-          resetStar = true
-        }
-
-        if (resetStar) {
-          return {
-            ...star,
-            x: Math.random() * window.innerWidth * 0.5,
-            y: Math.random() * window.innerHeight * 0.5,
-            trail: []
-          }
-        }
-
-        // Shorter trails on mobile for performance
-        const maxTrailLength = isMobile ? 10 : 15
-        const newTrail = [...star.trail, { x: star.x, y: star.y }]
-        if (newTrail.length > maxTrailLength) newTrail.shift()
-
-        return {
-          ...star,
-          x: newX,
-          y: newY,
-          trail: newTrail
-        }
-      }))
-    }
-
-    const starInterval = setInterval(animateStars, isMobile ? 50 : 40) // Slower interval on mobile
-    return () => clearInterval(starInterval)
-  }, [isMobile])
 
   // Handle click particles - disabled on mobile for performance
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -194,42 +127,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       }`}
       onClick={handleClick}
     >
-      {/* Falling stars background */}
-      <div className="absolute inset-0 pointer-events-none">
-        {fallingStars.map((star) => (
-          <div key={star.id}>
-            {/* Star trail */}
-            {star.trail.map((trailPoint, index) => (
-              <div
-                key={`trail-${index}`}
-                className="absolute rounded-full"
-                style={{
-                  left: `${trailPoint.x}px`,
-                  top: `${trailPoint.y}px`,
-                  width: `${star.size * (1 - index * 0.1)}px`,
-                  height: `${star.size * (1 - index * 0.1)}px`,
-                  backgroundColor: '#ffffff',
-                  opacity: star.opacity * (1 - index * 0.1) * 0.3,
-                  boxShadow: `0 0 ${star.size * 2}px #ffffff`,
-                }}
-              />
-            ))}
-            {/* Main star */}
-            <div
-              className="absolute rounded-full animate-pulse"
-              style={{
-                left: `${star.x}px`,
-                top: `${star.y}px`,
-                width: `${star.size}px`,
-                height: `${star.size}px`,
-                backgroundColor: '#ffffff',
-                opacity: star.opacity,
-                boxShadow: `0 0 ${star.size * 6}px #ffffff, 0 0 ${star.size * 12}px #ffffff80, 0 0 ${star.size * 18}px #ffffff40`,
-              }}
-            />
-          </div>
-        ))}
-      </div>
+
 
       {/* Central loading content */}
       <div className="text-center relative z-10">
@@ -239,7 +137,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             <span className="text-blue-300 drop-shadow-2xl animate-pulse-glow-blue">Inno</span>
             <span className="text-red-300 drop-shadow-2xl animate-pulse-glow-red">Verse</span>
           </div>
-          {/* Simplified glow effect on mobile */}
+          {/* Enhanced glow effect for luxury */}
           {!isMobile && (
             <>
               <div className="absolute inset-0 text-6xl md:text-8xl lg:text-9xl font-bold blur-xl opacity-50 animate-3d-rotate-delayed">
@@ -249,6 +147,14 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
               <div className="absolute inset-0 text-6xl md:text-8xl lg:text-9xl font-bold blur-2xl opacity-30 animate-3d-rotate-reverse">
                 <span className="text-blue-500">Inno</span>
                 <span className="text-red-500">Verse</span>
+              </div>
+              <div className="absolute inset-0 text-6xl md:text-8xl lg:text-9xl font-bold blur-3xl opacity-20 animate-3d-rotate-delayed">
+                <span className="text-cyan-400">Inno</span>
+                <span className="text-pink-400">Verse</span>
+              </div>
+              <div className="absolute inset-0 text-6xl md:text-8xl lg:text-9xl font-bold blur-4xl opacity-15 animate-3d-rotate-reverse">
+                <span className="text-purple-400">Inno</span>
+                <span className="text-yellow-400">Verse</span>
               </div>
             </>
           )}
@@ -270,17 +176,21 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             </div>
           </div>
 
-          {/* Simplified orbiting elements for mobile performance */}
+          {/* Enhanced orbiting elements for luxury */}
           <div className="absolute inset-0">
             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-4 sm:-translate-y-5 md:-translate-y-6 w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 bg-cyan-400 rounded-full animate-orbit-loading shadow-lg shadow-cyan-400/60"></div>
             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-4 sm:translate-y-5 md:translate-y-6 w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-3 md:h-3 bg-pink-400 rounded-full animate-orbit-loading-reverse shadow-lg shadow-pink-400/60"></div>
             <div className="absolute left-0 top-1/2 transform -translate-x-4 sm:-translate-x-5 md:-translate-x-6 -translate-y-1/2 w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-3.5 md:h-3.5 bg-purple-400 rounded-full animate-orbit-loading-slow shadow-lg shadow-purple-400/60"></div>
             <div className="absolute right-0 top-1/2 transform translate-x-4 sm:translate-x-5 md:translate-x-6 -translate-y-1/2 w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-2.5 md:h-2.5 bg-yellow-400 rounded-full animate-orbit-loading-reverse-slow shadow-lg shadow-yellow-400/60"></div>
-            {/* Additional orbiting elements - hidden on mobile */}
+            {/* Additional orbiting elements for luxury */}
             {!isMobile && (
               <>
                 <div className="absolute top-1/4 left-1/4 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-400 rounded-full animate-orbit-loading-fast shadow-lg shadow-blue-400/60"></div>
                 <div className="absolute bottom-1/4 right-1/4 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-400 rounded-full animate-orbit-loading-reverse-fast shadow-lg shadow-green-400/60"></div>
+                <div className="absolute top-1/4 right-1/4 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-indigo-400 rounded-full animate-orbit-loading-fast shadow-lg shadow-indigo-400/60"></div>
+                <div className="absolute bottom-1/4 left-1/4 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-400 rounded-full animate-orbit-loading-reverse-fast shadow-lg shadow-orange-400/60"></div>
+                <div className="absolute top-1/2 left-1/4 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-teal-400 rounded-full animate-orbit-loading-slow shadow-lg shadow-teal-400/60"></div>
+                <div className="absolute top-1/2 right-1/4 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-rose-400 rounded-full animate-orbit-loading-reverse-slow shadow-lg shadow-rose-400/60"></div>
               </>
             )}
           </div>
@@ -290,7 +200,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         <div className="w-full max-w-96 mx-auto mb-6 px-4">
           <div className="h-4 bg-gray-700/50 border-2 border-blue-400/30 rounded-full overflow-hidden shadow-2xl backdrop-blur-sm">
             <div
-              className="h-full bg-gradient-to-r from-blue-400 via-red-400 via-purple-400 to-yellow-400 rounded-full transition-all duration-500 ease-out animate-shimmer shadow-inner relative"
+              className="h-full bg-primary rounded-full transition-all duration-500 ease-out shadow-inner relative"
               style={{ width: `${Math.min(progress, 100)}%` }}
             >
               {/* Progress bar glow */}
