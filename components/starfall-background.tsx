@@ -17,15 +17,25 @@ export default function StarfallBackground() {
   const [scrollY, setScrollY] = useState(0)
   const [mounted, setMounted] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [isLowEnd, setIsLowEnd] = useState(false)
 
   useEffect(() => {
     setMounted(true)
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+    const checkDevice = () => {
+      const isMobileDevice = window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+      setIsMobile(isMobileDevice)
+
+      // Detect low-end devices (older phones, low RAM, etc.)
+      const isLowEndDevice = isMobileDevice && (
+        /Android [2-6]|iPhone [3-6]|iPad [1-3]/i.test(navigator.userAgent) ||
+        navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2 ||
+        window.innerWidth < 480 // Very small screens
+      )
+      setIsLowEnd(isLowEndDevice)
     }
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
+    checkDevice()
+    window.addEventListener('resize', checkDevice)
+    return () => window.removeEventListener('resize', checkDevice)
   }, [])
 
   useEffect(() => {
@@ -44,7 +54,7 @@ export default function StarfallBackground() {
 
     const createStars = () => {
       const newStars: Star[] = []
-      const numStars = isMobile ? 10 : 20 // Reduced from 50 to 20 on desktop, 10 on mobile
+      const numStars = isLowEnd ? 3 : (isMobile ? 8 : 15) // Further reduced: 3 low-end, 8 mobile, 15 desktop
       for (let i = 0; i < numStars; i++) {
         newStars.push({
           id: i,
@@ -87,9 +97,9 @@ export default function StarfallBackground() {
       )
     }
 
-    const interval = setInterval(animateStars, 50)
+    const interval = setInterval(animateStars, isLowEnd ? 100 : 50) // Slower animation for low-end devices
     return () => clearInterval(interval)
-  }, [mounted, isMobile])
+  }, [mounted, isMobile, isLowEnd])
 
   // Calculate opacity based on scroll position (fade out after 800px)
   const opacity = Math.max(0, 1 - scrollY / 800)
@@ -153,7 +163,7 @@ export default function StarfallBackground() {
       ))}
 
       {/* Additional ambient particles - reduced for performance */}
-      {!isMobile && Array.from({ length: 10 }, (_, i) => (
+      {!isLowEnd && !isMobile && Array.from({ length: 5 }, (_, i) => (
         <div
           key={`particle-${i}`}
           className="absolute rounded-full bg-gradient-to-r from-cyan-200 to-purple-300 animate-pulse"

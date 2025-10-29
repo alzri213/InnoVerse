@@ -80,10 +80,7 @@ export default function GradientBackground() {
 
         {/* Glowing particles - reduced for performance */}
         {!isMobile && (
-          <>
-            <div className="absolute top-1/3 left-1/3 w-2 h-2 bg-cyan-400 rounded-full animate-ping opacity-60"></div>
-            <div className="absolute top-2/3 right-1/3 w-1 h-1 bg-pink-400 rounded-full animate-ping opacity-80" style={{ animationDelay: '1s' }}></div>
-          </>
+          <div className="absolute top-1/3 left-1/3 w-2 h-2 bg-cyan-400 rounded-full animate-ping opacity-60"></div>
         )}
 
         {/* Data flow lines */}
